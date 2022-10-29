@@ -13,3 +13,7 @@ III. Managing the produced data
  2.  Snakemake file is lauched for the first rule in order to permit the decompression of the fastq.gz files.
      -As a first step in the learning approach, we have to pass to Snakemake the name of the result files we want to generate:
 snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp/ss_50k_0h_R1_2.fastq tmp/ss_50k_0h_R2_1.fastq tmp/ss_50k_0h_R2_2.fastq tmp/ss_50k_0h_R3_1.fastq tmp/ss_50k_0h_R3_2.fastq tmp/ss_50k_24h_R1_1.fastq tmp/ss_50k_24h_R1_2.fastq tmp/ss_50k_24h_R2_1.fastq tmp/ss_50k_24h_R2_2.fastq tmp/ss_50k_24h_R3_1.fastq tmp/ss_50k_24h_R3_2.fastq
+
+IV. Handling filenames
+   atacseq/scripts/config/config.yaml : to avoid copying all the file names to the command line (III.2) because this practise is not easily reproducible and not in accordance with FAIR principles a configuation files is created . This YAML or JSON file contains commun variables and paths like the paths to genome reference and samples.
+   
