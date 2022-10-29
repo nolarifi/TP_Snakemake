@@ -33,7 +33,7 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
               for example: scripts/config/envs/qc.yaml:file containing the fastqc tool (version , channels ) in order to control its automatic installation in a
                                                            specific environemts and insure the control quality of atacseq reads. 
 
-## VI.Update the Snakefile to include a new rule  : 
+## VI. Updating the Snakefile to include a new rule  : 
    1. in all rule section of Snakefile : 
       -the name of the result files and the path to the repertory containing these results are indicated
    2. rule fastqc_init:
