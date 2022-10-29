@@ -28,7 +28,7 @@ rule fastqc_init:
         zip = "results/fastqc_init/{sample}_fastqc.zip"
      conda:
         "envs/qc.yaml"
-     threads: 2
+     threads: 4
      log:
         "logs/fastqc_init_{sample}.log"
      message:
