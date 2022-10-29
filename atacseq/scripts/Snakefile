@@ -1,10 +1,14 @@
+##### path to config file #####
 configfile: "scripts/config/config.yaml",
 
+##### load rules #####
 rule all:
      input:
         expand("tmp/{sample}.fastq", sample = config["samples"]),
-        expand("tmp/{sample}.fastq", sample = config["samples"])
- 
+        expand("tmp/{sample}.fastq", sample = config["samples"]),
+        expand("results/fastqc_init/{sample}_fastqc.zip", sample = config["samples"]),
+        expand("results/fastqc_init/{sample}_fastqc.html", sample = config["samples"])
+
 rule unzip:
      input:
         "data/subset/{sample}.fastq.gz"
@@ -15,3 +19,23 @@ rule unzip:
         mkdir -p tmp
         gunzip -c {input} > {output}
         """
+
+rule fastqc_init:
+     input:
+        "tmp/{sample}.fastq"
+     output:
+        html = "results/fastqc_init/{sample}_fastqc.html",
+        zip = "results/fastqc_init/{sample}_fastqc.zip"
+     conda:
+        "envs/qc.yaml"
+     threads: 2
+     log:
+        "logs/fastqc_init_{sample}.log"
+     message:
+        "Executing Initial Quality Control on : {input}"
+     shell:
+        """
+        mkdir -p results/fastqc_init
+        fastqc {input} -o "results/fastqc_init" -t {threads} 2>{log}
+        """
+

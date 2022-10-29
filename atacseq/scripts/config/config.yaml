@@ -11,27 +11,29 @@
 ########################################################################
 ## Mus musculus References
 # genome fasta
-genome_fasta: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/fasta/all.fasta
+#genome_fasta: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/fasta/all.fasta
 # bowtie1 index
-idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2/all
+#idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2/all
 ## Samples
+
 samples:
-  ss_50k_0h_R1_1: data/subset/ss_50k_0h_R1_1.fastq.gz
-  ss_50k_0h_R1_2: data/subset/ss_50k_0h_R1_2.fastq.gz
-  ss_50k_0h_R2_1: data/subset/ss_50k_0h_R2_1.fastq.gz
-  ss_50k_0h_R2_2: data/subset/ss_50k_0h_R2_2.fastq.gz
-  ss_50k_0h_R3_1: data/subset/ss_50k_0h_R3_1.fastq.gz
-  ss_50k_0h_R3_2: data/subset/ss_50k_0h_R3_2.fastq.gz
-  ss_50k_24h_R1_1: data/subset/ss_50k_24h_R1_1.fastq.gz
-  ss_50k_24h_R1_2: data/subset/ss_50k_24h_R1_2.fastq.gz
-  ss_50k_24h_R2_1: data/subset/ss_50k_24h_R2_1.fastq.gz
-  ss_50k_24h_R2_2: data/subset/ss_50k_24h_R2_2.fastq.gz
-  ss_50k_24h_R3_1: data/subset/ss_50k_24h_R3_1.fastq.gz
-  ss_50k_24h_R3_2: data/subset/ss_50k_24h_R3_2.fastq.gz
+   ss_50k_0h_R1_1: data/subset/ss_50k_0h_R1_1.fastq.gz
+   ss_50k_0h_R1_2: data/subset/ss_50k_0h_R1_2.fastq.gz
+   ss_50k_0h_R2_1: data/subset/ss_50k_0h_R2_1.fastq.gz
+   ss_50k_0h_R2_2: data/subset/ss_50k_0h_R2_2.fastq.gz
+   ss_50k_0h_R3_1: data/subset/ss_50k_0h_R3_1.fastq.gz
+   ss_50k_0h_R3_2: data/subset/ss_50k_0h_R3_2.fastq.gz
+   ss_50k_24h_R1_1: data/subset/ss_50k_24h_R1_1.fastq.gz
+   ss_50k_24h_R1_2: data/subset/ss_50k_24h_R1_2.fastq.gz
+   ss_50k_24h_R2_1: data/subset/ss_50k_24h_R2_1.fastq.gz
+   ss_50k_24h_R2_2: data/subset/ss_50k_24h_R2_2.fastq.gz
+   ss_50k_24h_R3_1: data/subset/ss_50k_24h_R3_1.fastq.gz
+   ss_50k_24h_R3_2: data/subset/ss_50k_24h_R3_2.fastq.gz
+
 subsamples:
-  50k_0h_R1: data/subset/ss_50k_0h_R1
-  50k_0h_R2: data/subset/ss_50k_0h_R2
-  50k_0h_R3: data/subset/ss_50k_0h_R3
-  50k_24h_R1: data/subset/ss_50k_24h_R1
-  50k_24h_R2: data/subset/ss_50k_24h_R2
-  50k_24h_R3: data/subset/ss_50k_24h_R3
+   50k_0h_R1: data/subset/ss_50k_0h_R1
+   50k_0h_R2: data/subset/ss_50k_0h_R2
+   50k_0h_R3: data/subset/ss_50k_0h_R3
+   50k_24h_R1: data/subset/ss_50k_24h_R1
+   50k_24h_R2: data/subset/ss_50k_24h_R2
+   50k_24h_R3: data/subset/ss_50k_24h_R3
