@@ -16,4 +16,6 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
 
 IV. Handling filenames
    atacseq/scripts/config/config.yaml : to avoid copying all the file names to the command line (III.2) because this practise is not easily reproducible and not in accordance with FAIR principles a configuation files is created . This YAML or JSON file contains commun variables and paths like the paths to genome reference and samples.
+   -the Snakefile should be updated with the new informations in the config.yaml file by passing to Snakemake the name of the result files and the path to the repertory containing this results (for exemple tmp/ss_50k_24h_R3_1.fastq). These modifications are written in rule all section and the path to the config.yaml file is written in configfile variable 
+   -
    
