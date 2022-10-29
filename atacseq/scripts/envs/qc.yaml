@@ -1,3 +1,4 @@
+## conda environment for fastqc
 name: fastqc
 channels:
  - bioconda
