@@ -1,0 +1,10 @@
+rule unzip:
+     input:
+        "data/subset/{sample}.fastq.gz"
+     output:
+        temp("tmp/{sample}.fastq")
+     shell:
+        """
+        mkdir -p tmp
+        gunzip -c {input} > {output}
+        """
