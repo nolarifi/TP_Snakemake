@@ -20,16 +20,18 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
    - atacseq/scripts/config/config.yaml : to avoid copying all the file names to the command line (III.2) because this practise is not easily reproducible and not in accordance with FAIR principles a configuation files is created . This YAML or JSON file contains commun variables and paths like the paths to genome reference and samples.
    - the Snakefile should be updated with the new informations in the config.yaml file (NB : the path to config file is also added in Snakefile) :
       1. in all rule section of Snakefile : 
-         -the name of the temporary files and the path to the repertory containing these files (for exemple tmp/ss_50k_24h_R3_1.fastq) are mentionned. 
+         -the name of the temporary files and the path to the repertory containing these files (for exemple tmp/ss_50k_24h_R3_1.fastq) are mentionned using the 
+          expand() function. 
       2. unzip rule :
            -the input , output file and the script are specified  
       3. the script is launched : snakemake --cores all --snakefile scripts/Snakefile . Since Snakemake delete temporary files , they will not be saved. 
 
 ## V. Creating the conda environment file : 
-    - Purpose: conda is an environment manager where multiple packages and libraries could be installed in this isolated environment. Another particularity of conda is 
-             its adaptability to all operating systems.
-    -Each Snakemake rule has a conda parameter indicating the path to the config file describing the conda environment env.yaml
-         - for example: - scripts/config/envs/qc.yaml:  file containing the fastqc tool (version , channels ) in order to control its automatic installation in a specific environemts and insure the control quality of atacseq reads. 
+   - Purpose: conda is an environment manager where multiple packages and libraries could be installed in this isolated environment. Another particularity of conda is 
+               its adaptability to all operating systems.
+   -Each Snakemake rule has a conda parameter indicating the path to the config file describing the conda environment env.yaml
+              for example: scripts/config/envs/qc.yaml:file containing the fastqc tool (version , channels ) in order to control its automatic installation in a
+                                                           specific environemts and insure the control quality of atacseq reads. 
 
 ## VI.Update the Snakefile to include a new rule  : 
    1. in all rule section of Snakefile : 
@@ -40,11 +42,6 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
       -Conda parameter indicating the path to the config file describing the conda environment env.yaml 
    3. the script is launched: snakemake --cores all --use-conda --snakefile scripts/Snakefile
 
-
-Explanation of Snakefile :
-The all rule must contain the final output of the workflow in the input part. It will therefore evolve as the workflow is built. The expand() function is a helper
-function provided by Snakemake to collect the input files.=> Launch the workflow without specifying the output files since they are defined by the
-first rule of the Snakefile:
 
 
 
