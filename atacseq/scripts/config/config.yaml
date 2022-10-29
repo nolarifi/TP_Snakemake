@@ -11,9 +11,9 @@
 ########################################################################
 ## Mus musculus References
 # genome fasta
-#genome_fasta: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/fasta/all.fasta
+genome_fasta: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/fasta/all.fasta
 # bowtie1 index
-#idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2/all
+idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2/all
 ## Samples
 
 samples:
