@@ -1,3 +1,10 @@
+configfile: "scripts/config/config.yaml",
+
+rule all:
+     input:
+        expand("tmp/{sample}.fastq", sample = config["samples"]),
+        expand("tmp/{sample}.fastq", sample = config["samples"])
+ 
 rule unzip:
      input:
         "data/subset/{sample}.fastq.gz"
