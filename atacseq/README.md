@@ -1,4 +1,4 @@
-# TP_Snakemake:
+# TP_Snakemake::::
 ## I. set up the working environement 
  1.	A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
  2.	The deployement of public key is verified and a VM with the BioPipes image on the Cloud located is instantiated
