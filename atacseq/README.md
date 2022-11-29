@@ -1,5 +1,5 @@
 # TP_Snakemake:
-## I. set up the working environement :
+## I. set up the working environement 
  1.	A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
  2.	The deployement of public key is verified and a VM with the BioPipes image on the Cloud located is instantiated
  3.  The ssh key : ssh -A ubuntu@193.54.101.198 is retrieved
