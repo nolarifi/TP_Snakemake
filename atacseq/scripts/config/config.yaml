@@ -12,8 +12,8 @@
 ## Mus musculus References
 # genome fasta
 genome_fasta: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/fasta/all.fasta
-# bowtie1 index
-idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2/all
+# bowtie2 index
+idx_bt2: /home/ubuntu/atacseq/data/reference/Mus_musculus_GRCm39/bowtie2
 ## Samples
 
 samples:
@@ -31,9 +31,9 @@ samples:
    ss_50k_24h_R3_2: data/subset/ss_50k_24h_R3_2.fastq.gz
 
 subsamples:
-   50k_0h_R1: data/subset/ss_50k_0h_R1
-   50k_0h_R2: data/subset/ss_50k_0h_R2
-   50k_0h_R3: data/subset/ss_50k_0h_R3
-   50k_24h_R1: data/subset/ss_50k_24h_R1
-   50k_24h_R2: data/subset/ss_50k_24h_R2
-   50k_24h_R3: data/subset/ss_50k_24h_R3
+   ss_50k_0h_R1: data/subset/ss_50k_0h_R1
+   ss_50k_0h_R2: data/subset/ss_50k_0h_R2
+   ss_50k_0h_R3: data/subset/ss_50k_0h_R3
+   ss_50k_24h_R1: data/subset/ss_50k_24h_R1
+   ss_50k_24h_R2: data/subset/ss_50k_24h_R2
+   ss_50k_24h_R3: data/subset/ss_50k_24h_R3
