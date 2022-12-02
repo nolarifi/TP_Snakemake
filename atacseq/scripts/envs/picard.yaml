@@ -1,0 +1,9 @@
+## conda environment for picard
+name: picard
+channels:
+ - bioconda
+ - conda-forge
+ - default
+dependencies:
+ - picard==2.18.25
+ - samtools==1.9
