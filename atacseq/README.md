@@ -2,12 +2,12 @@
 ## I. set up the working environement 
  1.	A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
  2.	The deployement of public key is verified and a VM with the BioPipes image on the Cloud located is instantiated
- 3.  The ssh key : ssh -A ubuntu@193.54.101.198 is retrieved
+ 3.  The ssh key : ssh -A ubuntu@XXX.XX.XXX.XXX is retrieved
  4.  The conda working environment to use Snakemake is activated : conda activate snakemake
  5.  The installation of snekemake version is verified: snakemake --version
 ## II. import data
   1.  The working environment is organised in a way that meet the standards stated in DMP and data are imported from HPC-formation cluster:
-             scp -r studentxx@193.49.167.84:/home/users/shared/data/atacseq/data/subset /home/ubuntu/atacseq/data
+             scp -r studentxx@XXX.49.167.84:/home/users/shared/data/atacseq/data/subset /home/ubuntu/atacseq/data
 ## III. Managing the produced data
  1.  Snakefile configuration file is created in the scripts folder and it will list all the transformation rules that will be implement in the workflow
  2.  Snakemake file is lauched for the first rule in order to permit the decompression of the fastq.gz files.
@@ -43,6 +43,8 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
    3. the script is launched: snakemake --cores all --use-conda --snakefile scripts/Snakefile
 
 
-
+## copy configuration file from HPC project for trimmomatic and picard
+scp -r student05@193.49.167.84:/opt/apps/picard-2.18.25 /home/ubuntu/atacseq
+scp -r student05@193.49.167.84:/opt/apps/trimmomatic-0.38 /home/ubuntu/atacseq
 
    
