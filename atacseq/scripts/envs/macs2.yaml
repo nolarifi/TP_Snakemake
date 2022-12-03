@@ -1,0 +1,9 @@
+## conda environment for MACS2
+name: macs2
+channels:
+ - bioconda
+ - conda-forge
+ - default
+dependencies:
+ - macs2==2.1.2
+ - python==2.7.9

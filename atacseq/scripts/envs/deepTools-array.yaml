@@ -1,1 +1,10 @@
+## conda environment for deepTools array
+name: array
+channels:
+ - bioconda
+ - conda-forge
+ - default
+dependencies:
+ - deepTools==3.1.2
+ - samtools==1.3
 
