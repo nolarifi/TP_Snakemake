@@ -23,11 +23,11 @@ rule all:
         expand("results/picard/{subsample}_trim_mapped_sorted_q2.log", subsample = config["subsamples"]),
         expand("results/deeptools/{subsample}.npz", subsample = config["multibam"]),
         expand("results/deeptools/{subsample}_heatmap_SpearmanCorr.png", subsample = config["multibam"]),
-        expand("results/deeptools/{subsample}_heatmap_PearsonCorr.png" , subsample = config["multibam"])
-#        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_model.r", subsample = config["subsamples"]),
-#        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.narrowPeak", subsample = config["subsamples"]),
-#        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.xls", subsample = config["subsamples"]),
-#        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"])
+        expand("results/deeptools/{subsample}_heatmap_PearsonCorr.png" , subsample = config["multibam"]),
+        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_model.r", subsample = config["subsamples"]),
+        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.narrowPeak", subsample = config["subsamples"]),
+        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.xls", subsample = config["subsamples"]),
+        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"])
 rule unzip:
      input:
         "data/subset/{sample}.fastq.gz"
@@ -193,23 +193,24 @@ rule deeptools:
         --whatToPlot heatmap --plotNumbers \
         -o {output.png_Pear}   2>{log}
         """
-#rule macs2: 
-#     input:
-#        "results/picard/{subsample}_trim_mapped_sorted_q2_nodup.bam"
-#     output:
-#        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_model.r",
-#        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.narrowPeak",
-#        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.xls",
-#        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed"
-#     conda:
-#        "envs/macs2.yaml"
-#     threads: 8
-#     log:
-#        "logs/macs2_{subsample}.log"
-#     message:
-#        "Executing Identification of DNA access sites on : {input}"
-#     shell:
-#        """
-#        mkdir -p results/macs2
-#        macs2 callpeak -f BAM -t {input} -o {output} 2>{log} 
-#        """
+rule macs2: 
+     input:
+        "results/picard/{subsample}_trim_mapped_sorted_q2_nodup.bam"
+     output:
+        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_model.r",
+        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.narrowPeak",
+        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.xls",
+        "results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed"
+     conda:
+        "envs/macs2.yaml"
+     threads: 8
+     log:
+        "logs/macs2_{subsample}.log"
+     message:
+        "Executing Identification of DNA access sites on : {input}"
+     shell:
+        """
+        mkdir -p results/macs2
+        macs2 callpeak -t {input} -n {wildcards.subsample}_trim_mapped_sorted_q2_nodup \
+        -f BAM -g mm --outdir "results/macs2" 2>{log} 
+        """
