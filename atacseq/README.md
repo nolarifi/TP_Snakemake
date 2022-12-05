@@ -1,13 +1,18 @@
-# TP_Snakemake::::
+# Snakemake project
 ## I. set up the working environement 
- 1.	A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
- 2.	The deployement of public key is verified and a VM with the BioPipes image on the Cloud located is instantiated
+ 1.  A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
+ 2.  The deployement of public key is verified and a VM with the BioPipes image on the Cloud located is instantiated
  3.  The ssh key : ssh -A ubuntu@XXX.XX.XXX.XXX is retrieved
  4.  The conda working environment to use Snakemake is activated : conda activate snakemake
  5.  The installation of snekemake version is verified: snakemake --version
 ## II. import data
   1.  The working environment is organised in a way that meet the standards stated in DMP and data are imported from HPC-formation cluster:
-             scp -r studentxx@XXX.49.167.84:/home/users/shared/data/atacseq/data/subset /home/ubuntu/atacseq/data
+     -Import fastq sequences: \n 
+              scp -r studentxx@XXX.XX.XXX.XX:/home/users/shared/data/atacseq/data/subset /home/ubuntu/atacseq/data \n
+     -Copy trimmomatic and picard configuration file from HPC project : \n
+               scp -r studentXX@XXX.XX.XXX.XX:/opt/apps/picard-2.18.25 /home/ubuntu/atacseq \n
+               scp -r studentXX@XXX.XX.XXX.XX:/opt/apps/trimmomatic-0.38 /home/ubuntu/atacseq
+
 ## III. Managing the produced data
  1.  Snakefile configuration file is created in the scripts folder and it will list all the transformation rules that will be implement in the workflow
  2.  Snakemake file is lauched for the first rule in order to permit the decompression of the fastq.gz files.
@@ -34,17 +39,12 @@ snakemake --cores all --snakefile scripts/Snakefile tmp/ss_50k_0h_R1_1.fastq tmp
                                                            specific environemts and insure the control quality of atacseq reads. 
 
 ## VI. Updating the Snakefile to include a new rule  : 
-   1. in all rule section of Snakefile : 
+   1. In all rule section of Snakefile : 
       -the name of the result files and the path to the repertory containing these results are indicated
    2. rule fastqc_init:
       -the input , output files , the script are specified. 
       -Additionnal parameters such as log , threads , message to improve reproducibility and job efficiency are also added.
       -Conda parameter indicating the path to the config file describing the conda environment env.yaml 
-   3. the script is launched: snakemake --cores all --use-conda --snakefile scripts/Snakefile
+   3. The script is launched: snakemake --cores all --use-conda --snakefile scripts/Snakefile
 
 
-## copy configuration file from HPC project for trimmomatic and picard
-scp -r student05@193.49.167.84:/opt/apps/picard-2.18.25 /home/ubuntu/atacseq
-scp -r student05@193.49.167.84:/opt/apps/trimmomatic-0.38 /home/ubuntu/atacseq
-
-   
