@@ -1,0 +1,8 @@
+## conda environment for bedtools
+name: bedtools
+channels:
+ - bioconda
+ - conda-forge
+ - default
+dependencies:
+ - bedtools==2.27.1

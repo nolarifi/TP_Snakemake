@@ -27,8 +27,7 @@ rule all:
         expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_model.r", subsample = config["subsamples"]),
         expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.narrowPeak", subsample = config["subsamples"]),
         expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_peaks.xls", subsample = config["subsamples"]),
-        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"]),
-        expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_peaks.narrowPeak" , subsample = config["bed_0h_samples"])
+        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"])
 rule unzip:
      input:
         "data/subset/{sample}.fastq.gz"
@@ -84,7 +83,7 @@ rule trim:
         LEADING:3 \
         TRAILING:3 \
         SLIDINGWINDOW:4:15 \
-        MINLEN:33  2>{log}
+        MINLEN:33 -t {threads}  2>{log}
         """
 rule fastqc_post:
      input:
@@ -124,7 +123,7 @@ rule bowtie2:
         """
         mkdir -p results/bowtie2
         bowtie2  --very-sensitive -p 8 -k 10  -x {input.idx_bt2}/all  \
-        -1 {input.fwd}  -2 {input.rev}  |  samtools view -q 2 -bS  -  |  samtools sort - -o {output.bam}
+        -1 {input.fwd}  -2 {input.rev}  |  samtools view -q 2 -bS  -  |  samtools sort - -o {output.bam} -t {threads}
         samtools index -b {output.bam}
         samtools idxstats {output.bam} >{output.log}
         """
@@ -187,12 +186,12 @@ rule deeptools:
         --corMethod spearman \
         --removeOutliers \
         --whatToPlot heatmap --plotNumbers \
-        -o {output.png_Spea}  2>{log}
+        -o {output.png_Spea}   2>{log}
         plotCorrelation -in {input.npz} \
         --corMethod pearson \
         --removeOutliers \
         --whatToPlot heatmap --plotNumbers \
-        -o {output.png_Pear}  2>{log}
+        -o {output.png_Pear}   2>{log}
         """
 rule macs2: 
      input:
@@ -214,19 +213,4 @@ rule macs2:
         mkdir -p results/macs2
         macs2 callpeak -t {input} -n {wildcards.subsample}_trim_mapped_sorted_q2_nodup \
         -f BAM -g mm --outdir "results/macs2" 2>{log} 
-        """
-rule concat_zero:
-     input:
-        expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"])
-     output:
-        "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_peaks.narrowPeak" 
-     threads: 6
-     log:
-        "logs/{subsample}_bedtools_concat_zero.log"
-     message:
-        "Concatenation of zero samples on : {input}"
-     shell:
-        """
-        mkdir -p results/bedtools
-        cat {input} > {output} 
         """
