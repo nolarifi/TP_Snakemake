@@ -4,6 +4,8 @@ configfile: "scripts/config/config.yaml",
 ##### load rules #####
 rule all:
      input:
+        expand("tmp/{sample}.fastq", sample = config["samples"]),
+        expand("tmp/{sample}.fastq", sample = config["samples"]),
         expand("results/fastqc_init/{sample}_fastqc.zip", sample = config["samples"]),
         expand("results/fastqc_init/{sample}_fastqc.html", sample = config["samples"]),
         expand("results/trim/{subsample}_1_trim_paired.fastq.gz", subsample = config["subsamples"]),
@@ -28,15 +30,24 @@ rule all:
         expand("results/macs2/{subsample}_trim_mapped_sorted_q2_nodup_summits.bed", subsample = config["subsamples"]),
         expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_0h_peaks.narrowPeak", subsample = config["concatenation"]),
         expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_24h_peaks.narrowPeak", subsample = config["concatenation"]),
-        expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_0h_peaks.narrowPeak", subsample = config["concatenation"]),
-        expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_24h_peaks.narrowPeak", subsample = config["concatenation"]),
         expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_common.bed" ,subsample = config["concatenation"]),
+        expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_0h_merged.bed", subsample = config["concatenation"]),
+        expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_24h_merged.bed", subsample = config["concatenation"]),
         expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_0h_unique.bed", subsample = config["concatenation"]),
         expand("results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_24h_unique.bed", subsample = config["concatenation"])
-
-rule fastqc_init:
+rule unzip:
      input:
         "data/subset/{sample}.fastq.gz"
+     output:
+        temp("tmp/{sample}.fastq")
+     shell:
+        """
+        mkdir -p tmp
+        gunzip -c {input} > {output}
+        """
+rule fastqc_init:
+     input:
+        "tmp/{sample}.fastq"
      output:
         html = "results/fastqc_init/{sample}_fastqc.html",
         zip = "results/fastqc_init/{sample}_fastqc.zip"
@@ -228,53 +239,51 @@ rule concat:
         cat {input.zero} > {output.zero}
         cat {input.twentyfour} > {output.twentyfour} 
         """
-rule merge:
+rule intersect_common:
      input:
         zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_0h_peaks.narrowPeak",
         twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_24h_peaks.narrowPeak"
-     output:
-        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_0h_peaks.narrowPeak",
-        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_24h_peaks.narrowPeak"
-     conda:
-        "envs/bedtools.yaml"
-     threads: 6
-     log:
-        "logs/{subsample}_bedtools_merged.log"
-     message:
-        "merged peaks  : {input}"
-     shell:
-        """
-        sort -k1,1 -k2,2n {input.zero} | bedtools merge -i - > {output.zero}
-        sort -k1,1 -k2,2n {input.twentyfour} | bedtools merge -i - > {output.twentyfour}
-        """
-rule intersect_common:
-     input:
-        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_0h_peaks.narrowPeak",
-        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_24h_peaks.narrowPeak"
      output:
         "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_common.bed"
      conda:
         "envs/bedtools.yaml"
      threads: 6
      log:
-        "logs/{subsample}_bedtools_common.log"
+        "logs/{subsample}_common.log"
      message:
         "Identification of common sites : {input}"
      shell:
         """
         bedtools intersect -a {input.zero} -b {input.twentyfour} > {output}
         """
+rule merge:
+     input:
+        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_0h_peaks.narrowPeak",
+        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_24h_peaks.narrowPeak"
+     output:
+        
+     conda:
+        "envs/bedtools.yaml"
+     threads: 6
+     log:
+        "logs/{subsample}_common.log"
+     message:
+        "Identification of common sites : {input}"
+     shell:
+        """
+        bedtools intersect -a {input.zero} -b {input.twentyfour} > {output}
+
 rule intersect_0h_unique:
      input:
-        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_0h_peaks.narrowPeak",
-        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_24h_peaks.narrowPeak"
+        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_0h_peaks.narrowPeak",
+        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_24h_peaks.narrowPeak"
      output:
         "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_0h_unique.bed"
      conda:
         "envs/bedtools.yaml"
      threads: 6
      log:
-        "logs/{subsample}_bedtools_0h_unique.log"
+        "logs/{subsample}_0h_unique.log"
      message:
         "Identification of 0h unique sites : {input}"
      shell:
@@ -283,15 +292,15 @@ rule intersect_0h_unique:
         """
 rule intersect_24h_unique:
      input:
-        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_0h_peaks.narrowPeak",
-        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_merged_24h_peaks.narrowPeak"
+        zero = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_0h_peaks.narrowPeak",
+        twentyfour = "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_combined_24h_peaks.narrowPeak"
      output:
         "results/bedtools/{subsample}_trim_mapped_sorted_q2_nodup_24h_unique.bed"
      conda:
         "envs/bedtools.yaml"
      threads: 6
      log:
-        "logs/{subsample}_bedtools_24h_unique.log"
+        "logs/{subsample}_24h_unique.log"
      message:
         "Identification of 24h unique sites : {input}"
      shell:
