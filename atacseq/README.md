@@ -10,13 +10,13 @@ One of the main objectives of this project was to identify DNA accessible region
 -reference genome : Mus musculus
 
 ## subset data:
-SRR4785152 50k_0h_R1_1 0.023G 50k_0h_R1_2 0.024G
-SRR4785153 50k_0h_R2_1 0.023G 50k_0h_R2_2 0.025G
-SRR4785154 50k_0h_R3_1 0.023G 50k_0h_R3_2 0.025G
+SRR4785152 50k_0h_R1_1 0.023G 50k_0h_R1_2 0.024G <br>
+SRR4785153 50k_0h_R2_1 0.023G 50k_0h_R2_2 0.025G <br>
+SRR4785154 50k_0h_R3_1 0.023G 50k_0h_R3_2 0.025G <br>
 
-SRR4785341 50k_24h_R1_1 0.024G 50k_24h_R1_2 0.025G
-SRR4785342 50k_24h_R2_1 0.023G 50k_24h_R2_2 0.024G
-SRR4785343 50k_24h_R3_1 0.024G 50k_24h_R3_2 0.025G
+SRR4785341 50k_24h_R1_1 0.024G 50k_24h_R1_2 0.025G <br>
+SRR4785342 50k_24h_R2_1 0.023G 50k_24h_R2_2 0.024G <br>
+SRR4785343 50k_24h_R3_1 0.024G 50k_24h_R3_2 0.025G <br>
 
 ## WORKFLOW
 ## I. set up the working environement 
