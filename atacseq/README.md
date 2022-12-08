@@ -9,6 +9,15 @@ One of the main objectives of this project was to identify DNA accessible region
 -3 biological replicates of ~50,000 cells -paired end sequencing using Illumina technology with Nextera-based sequencing primers => 12 files (6 forward and 6 reverse) <br>
 -reference genome : Mus musculus
 
+## subset data:
+SRR4785152 50k_0h_R1_1 0.023G 50k_0h_R1_2 0.024G
+SRR4785153 50k_0h_R2_1 0.023G 50k_0h_R2_2 0.025G
+SRR4785154 50k_0h_R3_1 0.023G 50k_0h_R3_2 0.025G
+
+SRR4785341 50k_24h_R1_1 0.024G 50k_24h_R1_2 0.025G
+SRR4785342 50k_24h_R2_1 0.023G 50k_24h_R2_2 0.024G
+SRR4785343 50k_24h_R3_1 0.024G 50k_24h_R3_2 0.025G
+
 ## WORKFLOW
 ## I. set up the working environement 
  1.  A connection to the IFB Biosphere Cloud: https://biosphere.francebioinformatique.fr/cloud/ is established
